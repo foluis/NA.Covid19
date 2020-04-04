@@ -7,11 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NA.Covid19.Web", "NA.Covid1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NA.Covid19.CodeProofOfConcept", "NA.Covid19.CodeProofOfConcept\NA.Covid19.CodeProofOfConcept.csproj", "{FA975C1B-8FAB-44E3-A2FD-758893424928}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NA.Covid19.Models", "NA.Covid19.Models\NA.Covid19.Models.csproj", "{6BDCB36A-5F43-46AC-8B1A-D0E59845791D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NA.Covid19.Domain", "NA.Covid19.Models\NA.Covid19.Domain.csproj", "{6BDCB36A-5F43-46AC-8B1A-D0E59845791D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NA.Covid19.API", "NA.Covid19.API\NA.Covid19.API.csproj", "{4FC0FDC2-62DE-4468-9468-0D335E427E70}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "NA.Covid19.Database", "Covid19Database\NA.Covid19.Database.sqlproj", "{FFA26B85-6B17-4B2C-8009-5BB4344DE7A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NA.Covid19.Data", "NA.Covid19.Data\NA.Covid19.Data.csproj", "{29C0DABE-6A5F-432E-9B91-C62852E22BEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{FFA26B85-6B17-4B2C-8009-5BB4344DE7A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFA26B85-6B17-4B2C-8009-5BB4344DE7A4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FFA26B85-6B17-4B2C-8009-5BB4344DE7A4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{29C0DABE-6A5F-432E-9B91-C62852E22BEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29C0DABE-6A5F-432E-9B91-C62852E22BEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29C0DABE-6A5F-432E-9B91-C62852E22BEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29C0DABE-6A5F-432E-9B91-C62852E22BEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

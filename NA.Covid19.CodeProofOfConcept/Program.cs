@@ -1,4 +1,5 @@
 ﻿using FileHelpers;
+using NA.Covid19.Domain;
 using NA.Covid19.Models;
 using NA.Covid19.Models.FileHelpers;
 using System;
@@ -31,10 +32,27 @@ namespace NA.Covid19.CodeProofOfConcept
             List<string> splitted = new List<string>();
             //string fileList = GetCSV(uRI);
 
-            var result = GetRecords(uRI);
+            var result = GetRecords(uRI); //-------------------------- este es
+
+            InserDownload();
+
+
+
             //GetRecords2(uRI);
 
         }
+
+        private static void InserDownload()
+        {
+            //"D:\Program Files\Notepad++\notepad++.exe"
+        }
+
+        //private static void AddSamurai()
+        //{
+        //    var samurai = new Download { DownloadedDate = new DateTime(2020,04,06) };
+        //    context.Samurais.Add(samurai);
+        //    context.SaveChanges();
+        //}
 
         private static string GetCSV(string url)
         {
