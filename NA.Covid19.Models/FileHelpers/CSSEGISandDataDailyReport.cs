@@ -9,29 +9,39 @@ namespace NA.Covid19.Models.FileHelpers
     [IgnoreEmptyLines()]
     public class CSSEGISandDataDailyReport
     {
+        [FieldNullValue(typeof(string), "")]
         public string FIPS { get; set; }
+
+        [FieldNullValue(typeof(string), "")]
         public string Admin2 { get; set; }
+
+        [FieldQuoted('"', QuoteMode.OptionalForBoth, MultilineMode.AllowForRead)]
         public string Province_State { get; set; }
 
         [FieldQuoted('"', QuoteMode.OptionalForBoth, MultilineMode.AllowForRead)]
         public string Country_Region { get; set; }
 
         [FieldConverter(ConverterKind.Date, "yyyy-MM-dd HH:mm:ss")]
-        public DateTime Last_Update { get; set; }
-
-        //public string Last_Update { get; set; }
+        public DateTime Last_Update { get; set; }        
 
         [FieldConverter(ConverterKind.Double, ".")]
+        [FieldNullValue(typeof(double), "0.0")]
         public double Lat { get; set; }
+
         [FieldConverter(ConverterKind.Double, ".")]
+        [FieldNullValue(typeof(double), "0.0")]
         public double Long_ { get; set; }
 
-        //public string Lat { get; set; }
-        //public string Long_ { get; set; }
-
+        [FieldNullValue(typeof(int), "0")]
         public int Confirmed { get; set; }
+
+        [FieldNullValue(typeof(int), "0")]
         public int Deaths { get; set; }
+
+        [FieldNullValue(typeof(int), "0")]
         public int Recovered { get; set; }
+
+        [FieldNullValue(typeof(int), "0")]
         public int Active { get; set; }
 
         [FieldQuoted('"', QuoteMode.OptionalForBoth, MultilineMode.NotAllow)]

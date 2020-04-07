@@ -7,8 +7,10 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using FileHelpers;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NA.Covid19.Domain.ApiEntities;
 using NA.Covid19.Models.FileHelpers;
 
 namespace NA.Covid19.API.Controllers
@@ -18,18 +20,28 @@ namespace NA.Covid19.API.Controllers
     public class CSSEGISandDataDailyReportController : ControllerBase
     {
         HttpClient client = new HttpClient();
+        //private readonly IHostingEnvironment _host;
+
+        //public CSSEGISandDataDailyReportController(IHostingEnvironment host)
+        //{
+        //    _host = host;
+        //}
 
         // GET: api/CSSEGISandDataDailyReport
         [HttpGet]
         public void Get()
         {
+            //var contentRoot = _host.ContentRootPath;
+            var fileName = "03-30-2020.csv";
+
             //string uRI = "https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports/";
 
             string uRI = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
-            uRI += "03-30-2020.csv";
+            uRI += fileName;
 
             //string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "OriginalFiles1");
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+            //string path = Path.Combine(Server.MapPath("~/Templates/OriginalFiles.csv"));            
 
             if (!Directory.Exists(path))
             {
@@ -93,29 +105,40 @@ namespace NA.Covid19.API.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/CSSEGISandDataDailyReport/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST: api/CSSEGISandDataDailyReport
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IEnumerable<CSSEGISandDataDailyReport> GetCovid19File([FromBody] FileParameters parameters)
         {
+            CSSEGISandDataDailyReport[] records = Array.Empty<CSSEGISandDataDailyReport>();
+            try
+            {
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(parameters.Url);
+                HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+
+                StreamReader sr = new StreamReader(resp.GetResponseStream());
+                using var stream = new StringReader(sr.ReadToEnd());
+
+                var engine = new FileHelperEngine<CSSEGISandDataDailyReport>();
+
+                engine.BeforeReadRecord += Engine_BeforeReadRecord;
+                
+                records = engine.ReadStream(stream);        
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString()); // with stack trace
+            }
+            return records;
+
         }
 
-        // PUT: api/CSSEGISandDataDailyReport/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        private static void Engine_BeforeReadRecord(EngineBase engine, FileHelpers.Events.BeforeReadEventArgs<CSSEGISandDataDailyReport> e)
         {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            //var algo = ((CSSEGISandDataDailyReport)e.Record).Country_Region;
+            //if (algo != null)
+            //{
+            //    string hola = "adios";
+            //}           
         }
     }
 }
