@@ -172,7 +172,7 @@ namespace NA.Covid19.REST.Controllers
                 return StatusCode(500);
             }
 
-            return Ok(download);
+            return Ok();
 
         }
     }
