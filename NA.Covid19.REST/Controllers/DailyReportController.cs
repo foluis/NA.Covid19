@@ -22,6 +22,8 @@ namespace NA.Covid19.REST.Controllers
         private readonly DownloadOperations downloadOperations = new DownloadOperations();
         private readonly DetailOperations detailOperations = new DetailOperations();
         private CSSEGISandDataDailyReport[] records = Array.Empty<CSSEGISandDataDailyReport>();
+        private List<CSSEGISandDataDailyReport> rows = new List<CSSEGISandDataDailyReport>();
+        private List<Detail> details = new List<Detail>();
 
         [HttpPost("[action]")]
         public void RegisterDownload()
@@ -102,34 +104,76 @@ namespace NA.Covid19.REST.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task SaveReportFile([FromBody] FileParameters fileParameters)
+        public async Task<ActionResult> InsertFullDownload([FromBody] FileParameters fileParameters)
         {
+            //02-13-2020.csv
+            //MM-dd-yyyy
+
+            int year = 0;
+            int month = 0;
+            int day = 0;
+
+            bool success;
+
+            if (fileParameters == null)
+                return BadRequest("FileParameters is null");
+            else if (fileParameters.Date.Length != 10)
+                return BadRequest("FileParameters.Date.Length != 10");
+
+            success = Int32.TryParse(fileParameters.Date.Substring(0, 2), out month);
+            if (!success || month > 12)
+                return BadRequest("Invalid month value");
+
+            success = Int32.TryParse(fileParameters.Date.Substring(3, 2), out day);
+            if (!success || month > 31)
+                return BadRequest("Invalid day value");
+
+            success = Int32.TryParse(fileParameters.Date.Substring(6, 4), out year);
+            if (!success)
+                return BadRequest("Invalid year value");
+
+
             var fileName = fileParameters.Url + fileParameters.Date + ".csv";
+
+            Download download = new Download
+            {
+                DownloadedDate = new DateTime(year, month, day)
+            };
 
             var engine = new FileHelperEngine<CSSEGISandDataDailyReport>();
             try
             {
                 using (var result = new StreamReader(await client.GetStreamAsync(fileName)))
                 {
-                    records = engine.ReadStream(result);
+                    rows = engine.ReadStream(result).ToList();
                 }
 
-                //downloadOperations.InsertDownload(new Download { DownloadedDate = Convert.ToDateTime(fileParameters.Date) });
-                //detailOperations.InsertMultipleDetails(Mapear de CSSEGISandDataDailyReport a Details );
+                details = rows.Select(x => new Detail
+                {
+                    Province_State = x.Province_State,
+                    Country_Region = x.Country_Region,
+                    Last_Update = x.Last_Update,
+                    //Latitude = x.Lat,
+                    //Longitude = x.Long_
+                    Confirmed = x.Confirmed,
+                    Deaths = x.Deaths,
+                    Recovered = x.Recovered,
+                    Active = x.Active
+                }).ToList();
 
-                //Unir estas 2 operaciones en un
+                //download.Details = details;
 
+                downloadOperations.InsertFullDownload(download, details);
             }
             catch (Exception ex)
             {
                 var message = ex.Message;
-                Console.WriteLine(ex.ToString()); // with stack trace
+                Console.WriteLine(ex.ToString());
+                return StatusCode(500);
             }
 
+            return Ok(download);
 
-
-           
-            
         }
     }
 }

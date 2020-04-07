@@ -26,6 +26,6 @@ namespace NA.Covid19.Data
         {
             List<Detail> detail = context.Details.ToList();
             return detail;
-        }
+        }       
     }
 }

@@ -10,8 +10,8 @@ using NA.Covid19.Data;
 namespace NA.Covid19.Data.Migrations
 {
     [DbContext(typeof(Covid19Contexts))]
-    [Migration("20200403233827_Initial")]
-    partial class Initial
+    [Migration("20200407214550_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -16,6 +16,7 @@ namespace NA.Covid19.Domain
         public int Deaths { get; set; }
         public int Recovered { get; set; }
         public int Active { get; set; }
+        public int DownloadId { get; set; }
         public Download Download { get; set; }
     }
 }

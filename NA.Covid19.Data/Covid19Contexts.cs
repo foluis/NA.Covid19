@@ -15,5 +15,18 @@ namespace NA.Covid19.Data
         {
             optionsBuilder.UseSqlServer("Data Source =HPHOME;Initial Catalog=Covid19;Trusted_Connection=True;");;
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Detail>(eb =>
+            {
+                eb.Property(b => b.Province_State).HasColumnType("varchar(200)");
+                eb.Property(b => b.Country_Region).HasColumnType("varchar(200)");
+                eb.Property(b => b.Latitude).HasColumnType("decimal(5, 2)");
+                eb.Property(b => b.Longitude).HasColumnType("decimal(5, 2)");
+            });
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

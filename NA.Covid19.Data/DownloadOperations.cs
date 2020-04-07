@@ -21,5 +21,16 @@ namespace NA.Covid19.Data
             List<Download> downloads = context.Downloads.ToList();
             return downloads;
         }
+
+        public void InsertFullDownload(Download download, List<Detail> details)
+        {
+            var newDownloadId = context.Downloads.Add(download);
+            context.SaveChanges();
+
+            details.Where(x => x.DownloadId == 0).ToList().ForEach(b => b.DownloadId = download.Id);
+
+            context.AddRange(details);
+            context.SaveChanges();
+        }
     }
 }
