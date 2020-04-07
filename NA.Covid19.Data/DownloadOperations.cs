@@ -32,5 +32,11 @@ namespace NA.Covid19.Data
             context.AddRange(details);
             context.SaveChanges();
         }
+
+        //public void DeeteDownload(int DownloadId)
+        //{
+        //    //var blog = context.Downloads.Include(b => b.Posts).First();
+        //    context.Remove(blog);
+        //}
     }
 }

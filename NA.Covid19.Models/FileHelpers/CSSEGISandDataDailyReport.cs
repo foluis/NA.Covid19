@@ -24,13 +24,13 @@ namespace NA.Covid19.Models.FileHelpers
         [FieldConverter(ConverterKind.Date, "yyyy-MM-dd HH:mm:ss")]
         public DateTime Last_Update { get; set; }        
 
-        [FieldConverter(ConverterKind.Double, ".")]
-        [FieldNullValue(typeof(double), "0.0")]
-        public double Lat { get; set; }
+        [FieldConverter(ConverterKind.Decimal, ".")]
+        [FieldNullValue(typeof(decimal), "0.0")]
+        public decimal Lat { get; set; }
 
-        [FieldConverter(ConverterKind.Double, ".")]
-        [FieldNullValue(typeof(double), "0.0")]
-        public double Long_ { get; set; }
+        [FieldConverter(ConverterKind.Decimal, ".")]
+        [FieldNullValue(typeof(decimal), "0.0")]
+        public decimal Long_ { get; set; }
 
         [FieldNullValue(typeof(int), "0")]
         public int Confirmed { get; set; }

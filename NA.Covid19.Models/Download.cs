@@ -13,6 +13,7 @@ namespace NA.Covid19.Domain
 
         public int Id { get; set; }
         public DateTime DownloadedDate { get; set; }
+        public string DownloadedFileName { get; set; }
         public List<Detail> Details { get; set; }
     }
 }

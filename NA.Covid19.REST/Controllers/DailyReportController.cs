@@ -137,8 +137,11 @@ namespace NA.Covid19.REST.Controllers
 
             Download download = new Download
             {
-                DownloadedDate = new DateTime(year, month, day)
+                DownloadedDate = DateTime.Now,
+                DownloadedFileName = fileParameters.Date + ".csv"
             };
+
+
 
             var engine = new FileHelperEngine<CSSEGISandDataDailyReport>();
             try
@@ -153,8 +156,8 @@ namespace NA.Covid19.REST.Controllers
                     Province_State = x.Province_State,
                     Country_Region = x.Country_Region,
                     Last_Update = x.Last_Update,
-                    //Latitude = x.Lat,
-                    //Longitude = x.Long_
+                    Latitude = x.Lat,
+                    Longitude = x.Long_,
                     Confirmed = x.Confirmed,
                     Deaths = x.Deaths,
                     Recovered = x.Recovered,

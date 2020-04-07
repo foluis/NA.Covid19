@@ -26,6 +26,12 @@ namespace NA.Covid19.Data
         {
             List<Detail> detail = context.Details.ToList();
             return detail;
-        }       
+        }
+
+        //public void DeeteDetailsByDownloadId(int DownloadId)
+        //{
+        //    context.Details.de
+        //    context.SaveChanges();
+        //}
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NA.Covid19.Data;
 
 namespace NA.Covid19.Data.Migrations
 {
     [DbContext(typeof(Covid19Contexts))]
-    partial class Covid19ContextsModelSnapshot : ModelSnapshot
+    [Migration("20200407224610_addDownloadTime")]
+    partial class addDownloadTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
