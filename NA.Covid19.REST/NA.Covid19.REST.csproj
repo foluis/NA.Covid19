@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NA.Covid19.Data\NA.Covid19.Data.csproj" />
     <ProjectReference Include="..\NA.Covid19.Models\NA.Covid19.Domain.csproj" />
   </ItemGroup>
 

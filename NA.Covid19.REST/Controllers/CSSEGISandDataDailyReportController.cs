@@ -27,6 +27,8 @@ namespace NA.Covid19.REST.Controllers
         private readonly IHostEnvironment _host;
         private readonly ILogger _logger;
 
+        private CSSEGISandDataDailyReport[] records = Array.Empty<CSSEGISandDataDailyReport>();
+
         public CSSEGISandDataDailyReportController(IHostEnvironment host, ILogger<CSSEGISandDataDailyReportController> logger)
         {
             _host = host;
@@ -107,15 +109,34 @@ namespace NA.Covid19.REST.Controllers
             CSSEGISandDataDailyReport[] records = Array.Empty<CSSEGISandDataDailyReport>();
             try
             {
-                //var response = await client.GetAsync(fileName);
-                //using var responseStream = await response.Content.ReadAsAsync<TextReader>();
-
                 WebRequest GetURL = WebRequest.Create(fileName);
                 Stream page = GetURL.GetResponse().GetResponseStream();
                 StreamReader sr = new StreamReader(page);
 
                 var engine = new FileHelperEngine<CSSEGISandDataDailyReport>();                
                 records = engine.ReadStream(sr);
+            }
+            catch (Exception ex)
+            {
+                var message = ex.Message;
+                Console.WriteLine(ex.ToString()); // with stack trace
+            }
+
+            return records;
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IEnumerable<CSSEGISandDataDailyReport>> ReturnReportFile2([FromBody] FileParameters fileParameters)
+        {            
+            var fileName = fileParameters.Url + fileParameters.Date + ".csv";
+            
+            var engine = new FileHelperEngine<CSSEGISandDataDailyReport>();
+            try
+            {
+                using (var result = new StreamReader(await client.GetStreamAsync(fileName)))
+                {                    
+                    records = engine.ReadStream(result);
+                }                
             }
             catch (Exception ex)
             {
