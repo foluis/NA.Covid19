@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FileHelpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using NA.Covid19.Data;
 using NA.Covid19.Domain;
 using NA.Covid19.Domain.ApiEntities;
@@ -18,12 +21,61 @@ namespace NA.Covid19.REST.Controllers
     [ApiController]
     public class DailyReportController : ControllerBase
     {
+        private readonly IHostEnvironment _host;
+        private readonly ILogger _logger;
+
         private static readonly HttpClient client = new HttpClient();
         private readonly DownloadOperations downloadOperations = new DownloadOperations();
         private readonly DetailOperations detailOperations = new DetailOperations();
         private CSSEGISandDataDailyReport[] records = Array.Empty<CSSEGISandDataDailyReport>();
         private List<CSSEGISandDataDailyReport> rows = new List<CSSEGISandDataDailyReport>();
         private List<Detail> details = new List<Detail>();
+        private const string reportFolder = "Covid19_Reports";
+
+        public DailyReportController(IHostEnvironment host, ILogger<DailyReportController> logger)
+        {
+            _host = host;
+            _logger = logger;
+        }
+
+        [HttpPost("[action]")]
+        public void DownloadFile([FromBody] FileParameters fileParameters)
+        {
+            var fileName = fileParameters.Date + ".csv";
+
+            string uRI = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
+            uRI += fileName;
+
+            string reportFolderPath = Path.Combine(_host.ContentRootPath, reportFolder);
+
+            if (!Directory.Exists(reportFolderPath))
+            {
+                Directory.CreateDirectory(reportFolderPath);
+            }
+
+            try
+            {
+                WebClient webClient = new WebClient();
+                webClient.DownloadFileAsync(new Uri(uRI), Path.Combine(reportFolderPath, fileName));
+            }
+
+            //catch (WebException ex)
+            //{
+            //    //string algo = "";
+            //    //return StatusCode(404, ex.Message);
+            //}
+            //catch (ArgumentNullException ex)
+            //{
+            //    string algo = "";
+            //    return StatusCode(500, ex.Message);
+            //}
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                //return StatusCode(500, ex.Message);
+                throw;
+            }
+        }
 
         [HttpPost("[action]")]
         public void RegisterDownload()

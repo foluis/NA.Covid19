@@ -22,8 +22,8 @@ namespace NA.Covid19.REST.Controllers
     public class CSSEGISandDataDailyReportController : ControllerBase
     {
         private static readonly HttpClient client = new HttpClient();
-        private const string Path2 = "Covid19_Reports";
-        private readonly string _reportsUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
+        private const string reportFolder = "Covid19_Reports";
+        //private readonly string _reportsUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
         private readonly IHostEnvironment _host;
         private readonly ILogger _logger;
 
@@ -43,7 +43,7 @@ namespace NA.Covid19.REST.Controllers
             string uRI = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
             uRI += fileName;
 
-            string path2 = Path.Combine(_host.ContentRootPath, Path2);
+            string path2 = Path.Combine(_host.ContentRootPath, reportFolder);
 
             if (!Directory.Exists(path2))
             {
