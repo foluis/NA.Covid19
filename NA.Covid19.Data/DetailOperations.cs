@@ -28,10 +28,11 @@ namespace NA.Covid19.Data
             return detail;
         }
 
-        //public void DeeteDetailsByDownloadId(int DownloadId)
-        //{
-        //    context.Details.de
-        //    context.SaveChanges();
-        //}
+        public void DeleteDetailsByDownloadId(int downloadId)
+        {
+            var detail = context.Details.Where(x => x.DownloadId == downloadId);
+            context.Remove(detail);
+            context.SaveChanges();
+        }
     }
 }

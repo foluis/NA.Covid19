@@ -115,6 +115,8 @@ namespace NA.Covid19.REST.Controllers
 
             bool success;
 
+            string fileName = fileParameters.Date + ".csv";
+
             if (fileParameters == null)
                 return BadRequest("FileParameters is null");
             else if (fileParameters.Date.Length != 10)
@@ -132,8 +134,17 @@ namespace NA.Covid19.REST.Controllers
             if (!success)
                 return BadRequest("Invalid year value");
 
+            var existingDownload = downloadOperations.GetDownloadByFileName(fileName);
 
-            var fileName = fileParameters.Url + fileParameters.Date + ".csv";
+            if(existingDownload != null)
+            {
+                //detailOperations.DeleteDetailsByDownloadId(existingDownload.Id);
+                //downloadOperations.DeleteDownloadByFileName(fileName);
+
+                downloadOperations.DeleteDownloadCascadingByFileName(fileName);
+            }
+
+            var fileNamePath = fileParameters.Url + fileName;
 
             Download download = new Download
             {
@@ -146,7 +157,7 @@ namespace NA.Covid19.REST.Controllers
             var engine = new FileHelperEngine<CSSEGISandDataDailyReport>();
             try
             {
-                using (var result = new StreamReader(await client.GetStreamAsync(fileName)))
+                using (var result = new StreamReader(await client.GetStreamAsync(fileNamePath)))
                 {
                     rows = engine.ReadStream(result).ToList();
                 }

@@ -1,4 +1,5 @@
-﻿using NA.Covid19.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using NA.Covid19.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,12 @@ namespace NA.Covid19.Data
             return downloads;
         }
 
+        public Download GetDownloadByFileName(string fileName)
+        {
+            var download = context.Downloads.Where(x => x.DownloadedFileName == fileName).Include(b => b.Details).FirstOrDefault();
+            return download;
+        }
+
         public void InsertFullDownload(Download download, List<Detail> details)
         {
             var newDownloadId = context.Downloads.Add(download);
@@ -33,10 +40,22 @@ namespace NA.Covid19.Data
             context.SaveChanges();
         }
 
-        //public void DeeteDownload(int DownloadId)
-        //{
-        //    //var blog = context.Downloads.Include(b => b.Posts).First();
-        //    context.Remove(blog);
-        //}
+        public void DeleteDownloadByFileName(string fileName)
+        {
+            var download = context.Downloads.Where(x => x.DownloadedFileName == fileName).Include(b => b.Details).First();
+            context.Remove(download);
+            context.SaveChanges();
+        }
+
+        public void DeleteDownloadCascadingByFileName(string fileName)
+        {
+            var download = context.Downloads.Where(x => x.DownloadedFileName == fileName).Include(b => b.Details).FirstOrDefault();
+            context.Remove(download);
+
+            var detail = context.Details.Where(x => x.DownloadId == download.Id);
+            context.RemoveRange(detail);
+
+            context.SaveChanges();
+        }
     }
 }
