@@ -1,0 +1,11 @@
+﻿
+CREATE TABLE [dbo].[Downloads](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[DownloadedDate] [datetime2](7) NOT NULL,
+	[DownloadedFileName] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Downloads] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
