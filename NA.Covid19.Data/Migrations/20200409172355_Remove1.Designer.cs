@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NA.Covid19.Data;
 
 namespace NA.Covid19.Data.Migrations
 {
     [DbContext(typeof(Covid19Contexts))]
-    partial class Covid19ContextsModelSnapshot : ModelSnapshot
+    [Migration("20200409172355_Remove1")]
+    partial class Remove1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,36 +84,6 @@ namespace NA.Covid19.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Downloads");
-                });
-
-            modelBuilder.Entity("NA.Covid19.Domain.HistoricalReport", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Active")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Confirmed")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("VARCHAR(100)");
-
-                    b.Property<int>("Deaths")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("LastUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Recovered")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("HistoricalReports");
                 });
 
             modelBuilder.Entity("NA.Covid19.Domain.Detail", b =>

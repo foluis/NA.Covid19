@@ -10,6 +10,7 @@ namespace NA.Covid19.Data
     {
         public DbSet<Download> Downloads { get; set; }
         public DbSet<Detail> Details { get; set; }
+        public DbSet<HistoricalReport> HistoricalReports { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,6 +29,9 @@ namespace NA.Covid19.Data
                 .Property(e => e.Latitude).HasColumnType("DECIMAL(12,8)");
             modelBuilder.Entity<Detail>()
                 .Property(e => e.Longitude).HasColumnType("DECIMAL(12,8)");
+
+            modelBuilder.Entity<HistoricalReport>()
+               .Property(e => e.Country).HasColumnType("VARCHAR(100)");
 
             base.OnModelCreating(modelBuilder);
         }
