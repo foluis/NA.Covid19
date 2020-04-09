@@ -18,13 +18,21 @@ namespace NA.Covid19.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Detail>(eb =>
-            {
-                eb.Property(b => b.Province_State).HasColumnType("varchar(200)");
-                eb.Property(b => b.Country_Region).HasColumnType("varchar(200)");
-                eb.Property(b => b.Latitude).HasColumnType("decimal(5, 2)");
-                eb.Property(b => b.Longitude).HasColumnType("decimal(5, 2)");
-            });
+            //modelBuilder.Entity<Detail>(eb =>
+            //{
+            //    eb.Property(b => b.Province_State).HasColumnType("varchar(200)");
+            //    eb.Property(b => b.Country_Region).HasColumnType("varchar(200)");
+            //    eb.Property(b => b.Latitude).HasColumnType("decimal(5, 2)");
+            //    eb.Property(b => b.Longitude).HasColumnType("decimal(5, 2)");
+            //});
+
+            modelBuilder.Entity<Detail>()
+                .Property(e => e.Province_State).HasColumnType("VARCHAR(200)");//.HasMaxLength(250);
+            modelBuilder.Entity<Detail>()
+                .Property(e => e.ReportDateName).HasColumnType("VARCHAR(50)");//.HasMaxLength(50);
+            modelBuilder.Entity<Detail>()
+                .Property(e => e.Latitude).HasColumnType("DECIMAL(12,8)");//.HasMaxLength(50);
+
 
             base.OnModelCreating(modelBuilder);
         }

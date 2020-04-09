@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NA.Covid19.Data;
 
 namespace NA.Covid19.Data.Migrations
 {
     [DbContext(typeof(Covid19Contexts))]
-    partial class Covid19ContextsModelSnapshot : ModelSnapshot
+    [Migration("20200409005140_nullable")]
+    partial class nullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,16 +28,16 @@ namespace NA.Covid19.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("Active")
+                    b.Property<int>("Active")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Confirmed")
+                    b.Property<int>("Confirmed")
                         .HasColumnType("int");
 
                     b.Property<string>("Country_Region")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Deaths")
+                    b.Property<int>("Deaths")
                         .HasColumnType("int");
 
                     b.Property<int>("DownloadId")
@@ -53,7 +55,7 @@ namespace NA.Covid19.Data.Migrations
                     b.Property<string>("Province_State")
                         .HasColumnType("VARCHAR(200)");
 
-                    b.Property<int?>("Recovered")
+                    b.Property<int>("Recovered")
                         .HasColumnType("int");
 
                     b.Property<string>("ReportDateName")
