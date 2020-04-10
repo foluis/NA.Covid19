@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="OriginalFiles\**" />
+    <EmbeddedResource Remove="OriginalFiles\**" />
+    <None Remove="OriginalFiles\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FileHelpers" Version="3.4.1" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
@@ -17,10 +23,6 @@
   <ItemGroup>
     <ProjectReference Include="..\NA.Covid19.Data\NA.Covid19.Data.csproj" />
     <ProjectReference Include="..\NA.Covid19.Models\NA.Covid19.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="OriginalFiles\" />
   </ItemGroup>
 
 </Project>

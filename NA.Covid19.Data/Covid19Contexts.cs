@@ -19,6 +19,8 @@ namespace NA.Covid19.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Detail>()
                 .Property(e => e.Province_State).HasColumnType("VARCHAR(200)");
             modelBuilder.Entity<Detail>()
@@ -32,8 +34,6 @@ namespace NA.Covid19.Data
 
             modelBuilder.Entity<HistoricalReport>()
                .Property(e => e.Country).HasColumnType("VARCHAR(100)");
-
-            base.OnModelCreating(modelBuilder);
         }
     }
 }
