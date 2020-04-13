@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NA.Covid19.Data;
+using NA.Covid19.Data.Interfaces;
 using NA.Covid19.Domain;
 using NA.Covid19.Domain.ApiEntities;
 using NA.Covid19.Models.FileHelpers;
@@ -24,18 +25,24 @@ namespace NA.Covid19.REST.Controllers
         private readonly IHostEnvironment _host;
         private readonly ILogger _logger;
 
+        private readonly IDownloadRepository _downloadRepository;
+        private readonly IDetailRepository _detailRepository;
+
         private static readonly HttpClient client = new HttpClient();
-        private readonly DownloadOperations downloadOperations = new DownloadOperations();
-        private readonly DetailOperations detailOperations = new DetailOperations();
+        //private readonly DownloadOperations downloadOperations = new DownloadOperations();
+        //private readonly DetailOperations detailOperations = new DetailOperations();
         private CSSEGISandDataDailyReport[] records = Array.Empty<CSSEGISandDataDailyReport>();
         private List<CSSEGISandDataDailyReport> rows = new List<CSSEGISandDataDailyReport>();
         private List<Detail> details = new List<Detail>();
         private const string reportFolder = "Covid19_Reports";
 
-        public DailyReportController(IHostEnvironment host, ILogger<DailyReportController> logger)
+        public DailyReportController(IHostEnvironment host, ILogger<DailyReportController> logger,
+            IDownloadRepository downloadRepository, IDetailRepository detailRepository)
         {
             _host = host;
             _logger = logger;
+            _downloadRepository = downloadRepository;
+            _detailRepository = detailRepository;
         }
 
         [HttpPost("[action]")]
@@ -84,13 +91,13 @@ namespace NA.Covid19.REST.Controllers
             {
                 DownloadedDate = new DateTime(2020, 04, 06)
             };
-            downloadOperations.InsertDownload(download);
+            _downloadRepository.InsertDownload(download);
         }
 
         [HttpGet("[action]")]
         public IEnumerable<Download> GetAllDownloads()
         {
-            var result = downloadOperations.GetAllDownloads();
+            var result = _downloadRepository.GetAllDownloads();
             return result;
         }
 
@@ -111,7 +118,7 @@ namespace NA.Covid19.REST.Controllers
 
 
             };
-            detailOperations.InsertDetail(detail);
+            _detailRepository.InsertDetail(detail);
         }
 
         [HttpPost("[action]")]
@@ -130,7 +137,7 @@ namespace NA.Covid19.REST.Controllers
                     Deaths = 22,
                     Recovered = 43,
                     Active = 14
-                    
+
                 },
                 new Detail
                 {
@@ -145,13 +152,13 @@ namespace NA.Covid19.REST.Controllers
                     Active = 10
                 }
             };
-            detailOperations.InsertMultipleDetails(details);
+            _detailRepository.InsertMultipleDetails(details);
         }
 
         [HttpGet("[action]")]
         public IEnumerable<Detail> GetAllDetails()
         {
-            var result = detailOperations.GetAllDetails();
+            var result = _detailRepository.GetAllDetails();
             return result;
         }
 
@@ -186,14 +193,14 @@ namespace NA.Covid19.REST.Controllers
             if (!success)
                 return BadRequest("Invalid year value");
 
-            var existingDownload = downloadOperations.GetDownloadByFileName(fileName);
+            var existingDownload = _downloadRepository.GetDownloadByFileName(fileName);
 
-            if(existingDownload != null)
+            if (existingDownload != null)
             {
                 //detailOperations.DeleteDetailsByDownloadId(existingDownload.Id);
                 //downloadOperations.DeleteDownloadByFileName(fileName);
 
-                downloadOperations.DeleteDownloadCascadingByFileName(fileName);
+                _downloadRepository.DeleteDownloadCascadingByFileName(fileName);
             }
 
             var fileNamePath = fileParameters.Url + fileName;
@@ -229,7 +236,7 @@ namespace NA.Covid19.REST.Controllers
 
                 //download.Details = details;
 
-                downloadOperations.InsertFullDownload(download, details);
+                _downloadRepository.InsertFullDownload(download, details);
             }
             catch (Exception ex)
             {

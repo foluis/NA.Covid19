@@ -8,14 +8,19 @@ namespace NA.Covid19.Data
 {
     public class Covid19Contexts : DbContext
     {
+        public Covid19Contexts(DbContextOptions<Covid19Contexts> options)
+        : base(options)
+        {
+        }
+
         public DbSet<Download> Downloads { get; set; }
         public DbSet<Detail> Details { get; set; }
         public DbSet<HistoricalReport> HistoricalReports { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Data Source =HPHOME;Initial Catalog=Covid19;Trusted_Connection=True;"); ;
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Data Source =HPHOME;Initial Catalog=Covid19;Trusted_Connection=True;"); ;
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

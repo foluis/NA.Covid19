@@ -1,18 +1,17 @@
-﻿using NA.Covid19.Domain;
+﻿using NA.Covid19.Data.Interfaces;
+using NA.Covid19.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NA.Covid19.Data
+namespace NA.Covid19.Data.Repositories
 {
-    public class DetailOperations
+    public class DetailRepository : IDetailRepository
     {
-        //private static Covid19Contexts context = new Covid19Contexts();
-
         private readonly Covid19Contexts _context;
 
-        public DetailOperations(Covid19Contexts context)
+        public DetailRepository(Covid19Contexts context)
         {
             _context = context;
         }
@@ -37,7 +36,9 @@ namespace NA.Covid19.Data
 
         public void DeleteDetailsByDownloadId(int downloadId)
         {
-            var detail = _context.Details.Where(x => x.DownloadId == downloadId);
+            var detail = _context.Details
+                .Where(x => x.DownloadId == downloadId);
+
             _context.Remove(detail);
             _context.SaveChanges();
         }

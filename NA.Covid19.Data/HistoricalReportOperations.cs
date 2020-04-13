@@ -9,7 +9,14 @@ namespace NA.Covid19.Data
 {
     public class HistoricalReportOperations
     {
-        private static Covid19Contexts _context = new Covid19Contexts();
+        //private static Covid19Contexts _context = new Covid19Contexts();
+
+        private readonly Covid19Contexts _context;
+
+        public HistoricalReportOperations(Covid19Contexts context)
+        {
+            _context = context;
+        }
 
         public List<HistoricalReport> GetAllHistoricalReports()
         {
