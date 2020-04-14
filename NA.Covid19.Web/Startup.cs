@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NA.Covid19.Web.Data;
+using NA.Covid19.Web.Services;
 
 namespace NA.Covid19.Web
 {
@@ -29,7 +30,12 @@ namespace NA.Covid19.Web
             services.AddDevExpressBlazor();
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
             services.AddSingleton<WeatherForecastService>();
+            services.AddHttpClient<IHistoricalService, HistoricalService>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:44375/");
+            });
 
         }
 

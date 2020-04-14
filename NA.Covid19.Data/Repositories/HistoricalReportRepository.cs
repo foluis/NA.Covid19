@@ -20,7 +20,8 @@ namespace NA.Covid19.Data.Repositories
 
         public async Task<List<HistoricalReport>> GetHistoricalReportByCountry(string country)
         {
-            return await _context.HistoricalReports.FromSqlRaw("GetHistoricalReport @p0", country).ToListAsync();            
+            var result = await _context.HistoricalReports.FromSqlRaw("GetHistoricalReport @p0", country).ToListAsync();
+            return result;
         }
     }
 }

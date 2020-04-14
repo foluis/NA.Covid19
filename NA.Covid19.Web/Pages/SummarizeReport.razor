@@ -1,0 +1,29 @@
+﻿@page "/summarizeReport"
+@using NA.Covid19.Domain;
+
+<h3>Summarize Report</h3>
+
+<div>
+    <div class="form-group">
+        <DxTextBox aria-describedby="countrylHelp" @bind-Text="@countries"
+                   ClearButtonDisplayMode="@DataEditorClearButtonDisplayMode.Auto"
+                   NullText="Type a country..."></DxTextBox>
+        <small id="countrylHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <button class="btn btn-primary" @onclick="GetData">Get Data</button>
+</div>
+
+
+@*<br*@ 
+
+<DxChart Data="@ReportData">
+    <DxChartTitle Text="Historical Reports" />
+    <DxChartCommonSeries NameField="@((HistoricalReport s) => s.Country)"
+                         ArgumentField="@(s => s.LastUpdate)"
+                         ValueField="@(s => s.Deaths)"
+                         AggregationMethod="@Enumerable.Sum"
+                         SeriesType="@seriesType">
+
+
+    </DxChartCommonSeries>
+</DxChart>

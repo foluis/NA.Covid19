@@ -36,12 +36,31 @@ namespace NA.Covid19.REST.Controllers
             }            
         }
 
+        [HttpGet("[action]")]
+        public async Task<ActionResult> GetHistoricalReportByCountry()
+        {
+            try
+            {
+                List<HistoricalReport> result = await _historicalReportRepositoryt.GetHistoricalReportByCountry("");
+
+                if (result == null)
+                    return NotFound();
+                
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                string error = ex.ToString();
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retriving data from database");
+            }
+        }
+
         [HttpGet("[action]/{country}")]
         public async Task<ActionResult> GetHistoricalReportByCountry(string country)
         {
             try
             {
-                var result = await _historicalReportRepositoryt.GetHistoricalReportByCountry(country);
+                List<HistoricalReport> result = await _historicalReportRepositoryt.GetHistoricalReportByCountry(country);
 
                 if (result == null)
                     return NotFound();

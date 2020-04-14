@@ -13,7 +13,7 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "NA.Covid19.Database", "Covi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NA.Covid19.Data", "NA.Covid19.Data\NA.Covid19.Data.csproj", "{29C0DABE-6A5F-432E-9B91-C62852E22BEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NA.Covid19.REST", "NA.Covid19.REST\NA.Covid19.REST.csproj", "{403F8312-517A-42DC-AA0A-0466C0FC1E5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NA.Covid19.REST", "NA.Covid19.REST\NA.Covid19.REST.csproj", "{403F8312-517A-42DC-AA0A-0466C0FC1E5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
