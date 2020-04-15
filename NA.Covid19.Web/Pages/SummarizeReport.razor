@@ -13,9 +13,6 @@
     <button class="btn btn-primary" @onclick="GetData">Get Data</button>
 </div>
 
-
-@*<br*@ 
-
 <DxChart Data="@ReportData">
     <DxChartTitle Text="Historical Reports" />
     <DxChartCommonSeries NameField="@((HistoricalReport s) => s.Country)"
@@ -23,7 +20,5 @@
                          ValueField="@(s => s.Deaths)"
                          AggregationMethod="@Enumerable.Sum"
                          SeriesType="@seriesType">
-
-
     </DxChartCommonSeries>
 </DxChart>

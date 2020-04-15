@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using NA.Covid19.Domain.ApiEntities;
 
 namespace NA.Covid19.REST.Controllers
 {
@@ -77,6 +78,25 @@ namespace NA.Covid19.REST.Controllers
             {
                 string error = ex.ToString();
                 return StatusCode(StatusCodes.Status500InternalServerError,"Error retriving data from database");
+            }
+        }
+
+        [HttpPost("[action]")]
+        public async Task<ActionResult> GetHistoricalReportByCountriesByDate([FromBody] ReportParameters reportParameters)
+        {
+            try
+            {
+                List<HistoricalReport> result = await _historicalReportRepositoryt.GetHistoricalReportByCountriesByDate(reportParameters);
+
+                if (result == null)
+                    return NotFound();
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                string error = ex.ToString();
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retriving data from database");
             }
         }
     }
