@@ -22,3 +22,14 @@
                          SeriesType="@seriesType">
     </DxChartCommonSeries>
 </DxChart>
+
+<div class="card-body">
+    <DxChart Data="@ReportData">
+        <DxChartCommonSeries NameField="@((HistoricalReport s) => s.Country)" 
+                             ArgumentField="@(s => s.LastUpdate)" 
+                             ValueField="@(s => s.Deaths)"                              
+                             SeriesType="@seriesType">
+        </DxChartCommonSeries>
+        <DxChartLegend Position="@RelativePosition.Outside" HorizontalAlignment="@HorizontalAlignment.Right" />
+    </DxChart>
+</div>

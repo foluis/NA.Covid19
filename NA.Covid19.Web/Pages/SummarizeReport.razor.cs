@@ -1,6 +1,7 @@
 ﻿using DevExpress.Blazor;
 using Microsoft.AspNetCore.Components;
 using NA.Covid19.Domain;
+using NA.Covid19.Domain.ApiEntities;
 using NA.Covid19.Web.Services;
 using System;
 using System.Collections.Generic;
@@ -24,14 +25,22 @@ namespace NA.Covid19.Web.Pages
         //DxChartArgumentAxis chartArgumentAxis = new DxChartArgumentAxis();
         
 
-        protected override async Task OnInitializedAsync()
-        {
-            //ReportData = await _historicalService.GetHistoricalReportByCountry(countries);
-        }
+        //protected override async Task OnInitializedAsync()
+        //{
+        //    ReportData = await _historicalService.GetHistoricalReportByCountry(countries);
+        //}
 
         async Task GetData()
         {
-            ReportData = await _historicalService.GetHistoricalReportByCountry(countries);
+            //ReportData = await _historicalService.GetHistoricalReportByCountry(countries);
+
+            ReportParameters parameters = new ReportParameters
+            {
+                Countries = countries,
+                StartDate = new DateTime(2020,04,13)
+            };
+
+            ReportData = await _historicalService.GetHistoricalReportByCountriesByDate(parameters);
         }
     }
 }

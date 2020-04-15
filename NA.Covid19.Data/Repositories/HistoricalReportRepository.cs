@@ -27,7 +27,7 @@ namespace NA.Covid19.Data.Repositories
 
         public async Task<List<HistoricalReport>> GetHistoricalReportByCountriesByDate(ReportParameters reportParameters)
         {
-            var result = await _context.HistoricalReports.FromSqlRaw("GetHistoricalReportByCountriesByDate @p0,@p1", reportParameters.Countries, reportParameters.StartDate).ToListAsync();
+            List<HistoricalReport> result = await _context.HistoricalReports.FromSqlRaw("GetHistoricalReportByCountriesByDate @p0,@p1", reportParameters.Countries, reportParameters.StartDate).ToListAsync();
             return result;
         }
     }
