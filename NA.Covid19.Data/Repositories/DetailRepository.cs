@@ -52,7 +52,7 @@ namespace NA.Covid19.Data.Repositories
 
             IEnumerable<IGrouping<string, Detail>> detailsGrouping = details.GroupBy(b => b.Country_Region);
 
-            int i = 1;           
+            int i = 1;
 
             var groupOrdering = detailsGrouping.OrderBy(x => x.Key).ToList();
 

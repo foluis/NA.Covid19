@@ -15,20 +15,33 @@ namespace NA.Covid19.Web.Pages
         [Inject]
         public IHistoricalService _historicalService { get; set; }
 
-        public IEnumerable<HistoricalReport> ReportData { get; set; }
+        [Inject]
+        public IDetailService _detailService { get; set; }
 
-        string countries = "Colombia";
+        public IEnumerable<HistoricalReport> ReportData { get; set; }
+        public IEnumerable<Country> Countries { get; set; }
+        IEnumerable<Country> Items;
+
         DateTime startDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
 
         ChartSeriesType seriesType = ChartSeriesType.Line;
 
+        protected override async Task OnInitializedAsync()
+        {
+            await GetCountries();
+        }
+
+        private async Task GetCountries()
+        {
+            Countries = await _detailService.GetCountries();
+        }
+
         async Task GetData()
         {
-            //ReportData = await _historicalService.GetHistoricalReportByCountry(countries);
-
+            var selectedCountries = string.Join<string>(",", Items.Select(i => i.Name));
             ReportParameters parameters = new ReportParameters
             {
-                Countries = countries,
+                Countries = selectedCountries,
                 StartDate = startDate
             };
 

@@ -1,32 +1,39 @@
-﻿@page "/summarizeReport"
+﻿@page "/dailyDeaths"
 @using NA.Covid19.Domain;
-
-<h3>Summarize Report</h3>
 
 <div>
     <div class="form-group">
-        <DxTextBox aria-describedby="countrylHelp" @bind-Text="@countries"
-                   ClearButtonDisplayMode="@DataEditorClearButtonDisplayMode.Auto"
-                   NullText="Type a country..."></DxTextBox>
-        <small id="countrylHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        @if (@Countries == null)
+        {
+            <div>Loading countries...</div>
+        }
+        else
+        {
+            <label>Country</label>
+            <DxTagBox Data="@Countries"
+                      TextFieldName="Name"
+                      HideSelectedItems="false"
+                      @bind-SelectedItems="@Items" />
+        }
     </div>
 
     <div class="form-group">
-        Tag box
-    </div>
-
-    <div class="form-group">
+        <label>Starting Date</label>
         <DxDateEdit @bind-Date="@startDate"></DxDateEdit>
     </div>
 
     <button class="btn btn-primary" @onclick="GetData">Get Data</button>
 </div>
-
-<DxChart Data="@ReportData">
-    <DxChartTitle Text="Historical Reports" />
-    <DxChartCommonSeries NameField="@((HistoricalReport s) => s.Country)"
-                         ArgumentField="@(s => s.LastUpdate)"
-                         ValueField="@(s => s.Deaths)"
-                         SeriesType="@seriesType">
-    </DxChartCommonSeries>
-</DxChart>
+@if (ReportData != null)
+{
+    <div>
+        <DxChart Data="@ReportData">
+            <DxChartTitle Text="Daily Deaths Reports" />
+            <DxChartCommonSeries NameField="@((HistoricalReport s) => s.Country)"
+                                 ArgumentField="@(s => s.LastUpdate)"
+                                 ValueField="@(s => s.Deaths)"
+                                 SeriesType="@seriesType">
+            </DxChartCommonSeries>
+        </DxChart>
+    </div>
+}

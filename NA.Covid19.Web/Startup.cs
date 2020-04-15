@@ -36,6 +36,10 @@ namespace NA.Covid19.Web
             {
                 client.BaseAddress = new Uri("https://localhost:44375/");
             });
+            services.AddHttpClient<IDetailService, DetailService>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:44375/");
+            });
 
         }
 
