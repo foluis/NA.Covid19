@@ -17,18 +17,10 @@ namespace NA.Covid19.Web.Pages
 
         public IEnumerable<HistoricalReport> ReportData { get; set; }
 
-        
-        string countries = "";
+        string countries = "Colombia";
+        DateTime startDate = new DateTime(2020, 04, 01);
 
         ChartSeriesType seriesType = ChartSeriesType.Line;
-
-        //DxChartArgumentAxis chartArgumentAxis = new DxChartArgumentAxis();
-        
-
-        //protected override async Task OnInitializedAsync()
-        //{
-        //    ReportData = await _historicalService.GetHistoricalReportByCountry(countries);
-        //}
 
         async Task GetData()
         {
@@ -37,7 +29,7 @@ namespace NA.Covid19.Web.Pages
             ReportParameters parameters = new ReportParameters
             {
                 Countries = countries,
-                StartDate = new DateTime(2020,04,13)
+                StartDate = startDate
             };
 
             ReportData = await _historicalService.GetHistoricalReportByCountriesByDate(parameters);

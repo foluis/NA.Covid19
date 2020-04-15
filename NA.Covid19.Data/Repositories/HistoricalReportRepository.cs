@@ -27,7 +27,20 @@ namespace NA.Covid19.Data.Repositories
 
         public async Task<List<HistoricalReport>> GetHistoricalReportByCountriesByDate(ReportParameters reportParameters)
         {
-            List<HistoricalReport> result = await _context.HistoricalReports.FromSqlRaw("GetHistoricalReportByCountriesByDate @p0,@p1", reportParameters.Countries, reportParameters.StartDate).ToListAsync();
+            List<HistoricalReport> result = new List<HistoricalReport>();
+
+            var stringDate = reportParameters.StartDate.ToString("yyyy-MM-dd");
+            var query = $"EXEC GetHistoricalReportByCountriesByDate '{reportParameters.Countries}', '{stringDate}'";
+
+            var rowsAffected = _context.Database.ExecuteSqlRaw(query);
+
+            //List<HistoricalReport> result = await _context.HistoricalReports.FromSqlRaw("GetHistoricalReportByCountriesByDate @p0,@p1", reportParameters.Countries, reportParameters.StartDate)
+            //    .ToListAsync();
+
+            var query2 = "SELECT * FROM ResultData";
+
+            result = await _context.HistoricalReports.FromSqlRaw(query2)
+                .ToListAsync();
             return result;
         }
     }

@@ -10,6 +10,8 @@
                    NullText="Type a country..."></DxTextBox>
         <small id="countrylHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
+    <DxDateEdit @bind-Date="@startDate"></DxDateEdit>
+
     <button class="btn btn-primary" @onclick="GetData">Get Data</button>
 </div>
 
@@ -18,18 +20,19 @@
     <DxChartCommonSeries NameField="@((HistoricalReport s) => s.Country)"
                          ArgumentField="@(s => s.LastUpdate)"
                          ValueField="@(s => s.Deaths)"
-                         AggregationMethod="@Enumerable.Sum"
                          SeriesType="@seriesType">
     </DxChartCommonSeries>
 </DxChart>
 
-<div class="card-body">
-    <DxChart Data="@ReportData">
-        <DxChartCommonSeries NameField="@((HistoricalReport s) => s.Country)" 
-                             ArgumentField="@(s => s.LastUpdate)" 
-                             ValueField="@(s => s.Deaths)"                              
-                             SeriesType="@seriesType">
-        </DxChartCommonSeries>
-        <DxChartLegend Position="@RelativePosition.Outside" HorizontalAlignment="@HorizontalAlignment.Right" />
-    </DxChart>
-</div>
+@*AggregationMethod="@Enumerable.Sum"*@
+
+@*<div class="card-body">
+        <DxChart Data="@ReportData">
+            <DxChartCommonSeries NameField="@((HistoricalReport s) => s.Country)"
+                                 ArgumentField="@(s => s.LastUpdate)"
+                                 ValueField="@(s => s.Deaths)"
+                                 SeriesType="@seriesType">
+            </DxChartCommonSeries>
+            <DxChartLegend Position="@RelativePosition.Outside" HorizontalAlignment="@HorizontalAlignment.Right" />
+        </DxChart>
+    </div>*@
