@@ -18,7 +18,7 @@ namespace NA.Covid19.Web.Pages
         public IEnumerable<HistoricalReport> ReportData { get; set; }
 
         string countries = "Colombia";
-        DateTime startDate = new DateTime(2020, 04, 01);
+        DateTime startDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
 
         ChartSeriesType seriesType = ChartSeriesType.Line;
 
